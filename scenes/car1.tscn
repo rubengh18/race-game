@@ -868,13 +868,17 @@ loop = true
 [sub_resource type="AudioStreamSynchronized" id="AudioStreamSynchronized_rgl6c"]
 stream_count = 1
 stream_0/stream = ExtResource("6_m3saj")
-stream_0/volume = 0.0
+stream_0/volume = 12.0
 
 [node name="1" type="VehicleBody3D"]
 collision_layer = 2
 collision_mask = 3
-mass = 1000.0
+mass = 1500.0
+contact_monitor = true
+max_contacts_reported = 1
 script = ExtResource("1_sv03b")
+MAX_STEER = 0.6
+MAX_ENGINE = 850
 
 [node name="Collision" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.000488281, 0.379944, 0.0473633)
@@ -883,7 +887,7 @@ shape = SubResource("BoxShape3D_43djr")
 [node name="left_rear" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.552043, 0.140992, -0.833631)
 use_as_traction = true
-wheel_roll_influence = 1.0
+wheel_roll_influence = 7.0
 wheel_radius = 0.23
 wheel_friction_slip = 9.0
 suspension_travel = 0.3
@@ -898,7 +902,7 @@ skeleton = NodePath("")
 [node name="right_rear" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.552044, 0.140992, -0.833631)
 use_as_traction = true
-wheel_roll_influence = 1.0
+wheel_roll_influence = 7.0
 wheel_radius = 0.23
 wheel_friction_slip = 9.0
 suspension_travel = 0.3
@@ -913,7 +917,7 @@ skeleton = NodePath("")
 [node name="left_front" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.534765, 0.127087, 0.973224)
 use_as_steering = true
-wheel_roll_influence = 1.0
+wheel_roll_influence = 7.0
 wheel_radius = 0.23
 suspension_travel = 0.3
 suspension_stiffness = 200.0
@@ -927,7 +931,7 @@ skeleton = NodePath("")
 [node name="right_front" type="VehicleWheel3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.534765, 0.127087, 0.973224)
 use_as_steering = true
-wheel_roll_influence = 1.0
+wheel_roll_influence = 7.0
 wheel_radius = 0.23
 suspension_travel = 0.3
 suspension_stiffness = 200.0
@@ -948,12 +952,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 script = ExtResource("2_ev3mx")
 
 [node name="SpringArm3D" type="SpringArm3D" parent="Camroot"]
-spring_length = -3.0
+spring_length = -3.5
 
 [node name="Camera3D" type="Camera3D" parent="Camroot/SpringArm3D"]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 v_offset = 1.0
-fov = 120.0
+fov = 90.0
 far = 500.0
 
 [node name="Control" type="ColorRect" parent="."]
@@ -970,12 +974,16 @@ script = ExtResource("4_cmwup")
 broadcast = 2
 process = 1
 node_path = NodePath("..")
-properties = PackedStringArray("position", "rotation", "basis")
+properties = PackedStringArray("position", "basis", "rotation", "engine_force", "steering")
 interpolated = true
 interpolation_speed = 15.0
 
 [node name="Username" type="Label3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.10001, 0)
+visibility_range_end = 150.0
+pixel_size = 0.01
+billboard = 1
+font_size = 50
 
 [node name="RayCast3D" type="RayCast3D" parent="."]
 target_position = Vector3(0, -0.5, 0)
@@ -983,7 +991,7 @@ target_position = Vector3(0, -0.5, 0)
 [node name="Engine" type="AudioStreamPlayer3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.999127, -0.041771, 0, 0.041771, 0.999127, 0, 0.320225, 1.0098)
 stream = SubResource("AudioStreamPlaylist_hpaho")
-volume_db = 80.0
+volume_db = 30.0
 autoplay = true
 max_distance = 50.0
 playback_type = 1
@@ -996,5 +1004,13 @@ autoplay = true
 
 [node name="Crash" type="AudioStreamPlayer3D" parent="."]
 stream = SubResource("AudioStreamSynchronized_rgl6c")
-volume_db = 80.0
-pitch_scale = 0.7
+volume_db = 50.0
+pitch_scale = 0.8
+max_distance = 15.0
+
+[node name="Camera2" type="Camera3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.802116, 0.341202)
+fov = 100.0
+far = 400.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

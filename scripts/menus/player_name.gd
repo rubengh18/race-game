@@ -18,7 +18,7 @@ func _on_continue_pressed():
 	GDSync.set_player_username(%Username.text)
 	
 	
-	get_tree().change_scene_to_file("res://scenes/lobby_browsing_menu.tscn")
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 
 
 func _on_back_pressed() -> void:

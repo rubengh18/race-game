@@ -1,13 +1,14 @@
 extends Control
 var player_count=0
 var ranking={"1": "algo"}
+
 func _init():
 #	Connect all signals for player joining and leaving. Also handle disconnects!
 	GDSync.disconnected.connect(disconnected)
 	GDSync.host_changed.connect(host_changed)
 	GDSync.client_joined.connect(client_joined)
 	GDSync.client_left.connect(client_left)
-	GDSync.expose_func(update_ranking)
+	
 #	Expose this function to the plugin so it may be called remotely
 	GDSync.expose_func(switch_scene)
 
@@ -17,7 +18,6 @@ func disconnected():
 func _ready():
 	GDSync.set_lobby_data("ranking", ranking)
 	
-	update_ranking()
 #	Show the start button only if this player is the host
 	%Start.visible = GDSync.is_host()
 	
@@ -54,12 +54,7 @@ func client_left(client_id : int):
 #	Update the current player count display
 	%PlayerCount.text = str(GDSync.get_lobby_player_count())+"/"+str(GDSync.get_lobby_player_limit())
 
-func update_ranking():
-	
-	var r=GDSync.get_lobby_data("ranking")
-	if r:
-		for i in r:
-			printraw(i)
+
 
 func _on_start_pressed():
 #	Close the lobby so that no new players can join

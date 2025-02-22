@@ -9,7 +9,7 @@ func disconnected():
 	get_tree().change_scene_to_file("res://scenes/start_menu.tscn")
 
 func _on_back_pressed():
-	get_tree().change_scene_to_file("res://scenes/player_name.tscn")
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 
 func _on_create_lobby_pressed():
 	%LobbyCreator.visible = true

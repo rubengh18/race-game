@@ -8,10 +8,6 @@ func _ready() -> void:
 	
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 	
 func connected():
 #	Connected! Continue on to the customization screen

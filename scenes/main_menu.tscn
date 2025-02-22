@@ -1,0 +1,129 @@
+[gd_scene load_steps=6 format=3 uid="uid://bpq2gbjqkv62o"]
+
+[ext_resource type="Theme" uid="uid://5whm1igkt23h" path="res://addons/GD-Sync/UI/ConfigMenu/GD-Theme.tres" id="1_5mwyg"]
+[ext_resource type="Script" path="res://scripts/menus/main_menu.gd" id="2_idufo"]
+[ext_resource type="Shader" path="res://scripts/shaders/green_screens.gdshader" id="2_u10gn"]
+[ext_resource type="Texture2D" uid="uid://bt6xa43nx3i05" path="res://assets/cars/images/1.png" id="3_1ul6k"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lois7"]
+shader = ExtResource("2_u10gn")
+shader_parameter/chroma_key_color = Color(0, 1, 0, 1)
+shader_parameter/pickup_range = 0.65
+shader_parameter/fade_amount = 0.1
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_5mwyg")
+script = ExtResource("2_idufo")
+
+[node name="Main" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Main"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Main/CenterContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Main/CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 80
+text = "Race Game"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Main/CenterContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Back" type="Button" parent="Main/CenterContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 70
+text = "Back"
+
+[node name="Play" type="Button" parent="Main/CenterContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 70
+text = "Play"
+
+[node name="Garage" type="Button" parent="Main/CenterContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 70
+text = "Cars"
+
+[node name="Cars" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 30.0
+offset_top = 30.0
+offset_right = -30.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Cars"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Cars/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 70
+text = "SELECT YOUR CAR"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Cars/VBoxContainer"]
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="Cars/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="1" type="Button" parent="Cars/VBoxContainer/HBoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+text = "PROTO ONE"
+
+[node name="thunder" type="Button" parent="Cars/VBoxContainer/HBoxContainer/GridContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+text = "THUNDER"
+
+[node name="vboxContainer" type="VBoxContainer" parent="Cars/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Cars/VBoxContainer/HBoxContainer/vboxContainer"]
+material = SubResource("ShaderMaterial_lois7")
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("3_1ul6k")
+expand_mode = 5
+
+[node name="Select" type="Button" parent="Cars/VBoxContainer/HBoxContainer/vboxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Ready"
+
+[connection signal="pressed" from="Main/CenterContainer/VBoxContainer/HBoxContainer/Back" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Main/CenterContainer/VBoxContainer/HBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Main/CenterContainer/VBoxContainer/HBoxContainer/Garage" to="." method="_on_garage_pressed"]
+[connection signal="pressed" from="Cars/VBoxContainer/HBoxContainer/GridContainer/1" to="." method="_on__pressed"]
+[connection signal="pressed" from="Cars/VBoxContainer/HBoxContainer/GridContainer/thunder" to="." method="_on_thunder_pressed"]
+[connection signal="pressed" from="Cars/VBoxContainer/HBoxContainer/vboxContainer/Select" to="." method="_on_select_pressed"]
